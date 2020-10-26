@@ -6,7 +6,7 @@
     "author": "Camptocamp,Akretion,Odoo Community Association (OCA)",
     "maintainer": "Camptocamp",
     "category": "Delivery",
-    "depends": ["delivery_carrier_info"],
+    "depends": ["delivery_carrier_info", "stock"],
     "website": "https://github.com/OCA/delivery-carrier",
     "data": [
         "views/delivery.xml",

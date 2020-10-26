@@ -2,7 +2,7 @@
 # Copyright 2013-2016 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class DeliveryCarrier(models.Model):
@@ -16,10 +16,10 @@ class DeliveryCarrier(models.Model):
         context={"active_test": False},
     )
 
-    @api.multi
     def default_options(self):
         """ Returns default and available options for a carrier """
-        options = self.env["delivery.carrier.option"].browse()
+        self.ensure_one()
+        options = self.env["delivery.carrier.option"]
         for available_option in self.available_option_ids:
             if available_option.mandatory or available_option.by_default:
                 options |= available_option

@@ -4,7 +4,7 @@
 
 import logging
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 import odoo.addons.decimal_precision as dp
 
@@ -18,7 +18,6 @@ class StockMoveLine(models.Model):
         digits=dp.get_precision("Stock Weight"), help="Weight of the pack_operation"
     )
 
-    @api.multi
     def get_weight(self):
         """Calc and save weight of pack.operations.
 
@@ -27,6 +26,7 @@ class StockMoveLine(models.Model):
         return:
             the sum of the weight of [self]
         """
+        self.ensure_one()
         total_weight = 0
         kg = self.env.ref("uom.product_uom_kgm").id
         units = self.env.ref("uom.product_uom_unit").id

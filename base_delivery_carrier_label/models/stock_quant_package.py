@@ -38,11 +38,8 @@ class StockQuantPackage(models.Model):
                     ]
                 )
 
-                # we make use get_weight with  @api.multi instead of
-                # sum([op.get_weight for op in operations])
-
                 # sum of the pack_operation
-                payload_weight = operations.get_weight()
+                payload_weight = sum([op.get_weight for op in operations])
 
                 # sum and save in package
                 pack.weight = payload_weight
@@ -52,7 +49,6 @@ class StockQuantPackage(models.Model):
         if to_do:
             super(StockQuantPackage, to_do)._compute_weight()
 
-    @api.multi
     def _complete_name(self, name, args):
         res = super()._complete_name(name, args)
         for pack in self:
@@ -61,3 +57,6 @@ class StockQuantPackage(models.Model):
             if pack.weight:
                 res[pack.id] += " %s kg" % pack.weight
         return res
+
+    def open_website_url(self):
+        return None
